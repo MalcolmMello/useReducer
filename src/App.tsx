@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { usePeopleList } from './reducers/peopleList'
 import './App.css';
 
+
 const App = () => {
 	const [list, dispatch] = usePeopleList()
 	const [nameInput, setNameInput] = useState('')
