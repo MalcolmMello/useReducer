@@ -1,69 +1,22 @@
-import React, { ChangeEvent } from 'react';
-import { useState } from 'react';
-import { usePeopleList } from './reducers/peopleList'
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { SignUp } from './pages/SignUp';
+import { ShowData } from './pages/ShowData';
 
+import { ContextProvider } from './contexts/Context';
 
 const App = () => {
-	const [list, dispatch] = usePeopleList()
-	const [nameInput, setNameInput] = useState('')
-	
-
-	const handleAddButton = () => {
-		if(nameInput) {
-			dispatch({
-				type: 'ADD',
-				payload: {
-					name: nameInput
-				}
-			})
-			setNameInput('')
-		}
-	}
-
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setNameInput(e.target.value)
-	}
-
-	const deletePerson = (id: string) => {
-		dispatch({
-			type: 'DEL',
-			payload: {
-				id
-			}
-		})
-	}
-
-	const handleOrderButton = () => {
-		dispatch({
-			type: 'ORDER',
-		});
-	}
 	return (
-		<div>
-			<input
-				type="text"
-				value={nameInput}
-				onChange={handleInputChange}
-			/>
-
-			<button onClick={handleAddButton}>Adicionar</button>
-
-			<hr />
-
-			<button onClick={handleOrderButton}>Ordenar</button>
-
-			Lista de pessoas:
-			<ul>
-				{list.map((item, index) => (
-					<li key={index}>
-						{item.name}
-						<button onClick={() => deletePerson(item.id)}>Deletar</button>
-					</li>
-				))}
-			</ul>
-		</div>
-	);
+		<ContextProvider>
+			<BrowserRouter>
+				<h1>Título da página</h1>
+				<hr />
+				<Routes>
+					<Route path="/" element={<SignUp />} />
+					<Route path="/exibir" element={<ShowData />} />
+				</Routes>
+			</BrowserRouter>
+		</ContextProvider>
+	)
 }
 
 export default App;
